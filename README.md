@@ -25,13 +25,21 @@ P.P.S Please note that if only `on_docker_startup.sh` is changed, there is no ne
 
 ## Troubleshooting
 
-1. If building container does not work:
+1. For debugging on Windows WSL you will need:
+- [USB-IP](https://github.com/MicrosoftDocs/wsl/blob/main/WSL/connect-usb.md) 
+- NRF command line tools on WSL and Windows
+- Restaring udev: `sudo service udev restart && sudo udevadm control --reload` 
+
+2. Minicom has to be setup to use Logs. It's not done since Serial ports can be individual. Check them with `dmesg | grep tty`, `lsusb`. Usually it's something like `/dev/ttyACM0`.  
+Use `sudo minicom -s` to set it up, then set as default
+
+2. If building container does not work:
    - try adding `--no-cache` to `docker build` command.
    - try running the first time from the shell script instead of VSCode to see the logs clearly without pop-up errors.
-2. If you reloaded VSCode before intitial installation was complete, no problem.
+3. If you reloaded VSCode before intitial installation was complete, no problem.
    Close VSCode, run `docker ps`, stop running containers and open VSCode again.
-3. If image is build succesfully in `run_bash_in_docker.sh`, but you have issues with VSCode,  
+4. If image is build succesfully in `run_bash_in_docker.sh`, but you have issues with VSCode,  
    try running `Dev Containers: Rebuild without cache and reopen in contaier` action (not from a container).  
    Also ensure that there are no modification which cause container to exit before VSCode canattach itself.
-4. If you have issues with `nrfjprog`/`west flash`, ensure `$LANG` is not set.   
+5. If you have issues with `nrfjprog`/`west flash`, ensure `$LANG` is not set.   
    "terminal.integrated.detectLocale": "off" has to be off, otherwise VSCode sets this ENV.
