@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "ENTRYPOINT.SH"
+echo `basename "$0"`
 
 # Move actual logic to another script so that we do not have to rebuild container each time entrypoint.sh is changed
 dos2unix $WORKDIR_CONTAINER/on_docker_startup.sh

@@ -19,21 +19,19 @@ This project strives to make containerized development with Nordic chips,  Zephy
 P.S. You can also run bash in Docker by `run_bash_in_docker.sh` script.  
 Then you can also attach to running container with VSCode, but you won't have docker extensions and some other configurations.  
 
-P.P.S Please note that if only `setup.sh` is changed, there is no need to rebuild the image!
+P.P.S Please note that if only `on_docker_startup.sh` is changed, there is no need to rebuild the image!
 
 ---
 
 ## Troubleshooting
 
 1. If building container does not work:
-   - try adding `--network host` to `docker build` command.
    - try adding `--no-cache` to `docker build` command.
    - try running the first time from the shell script instead of VSCode to see the logs clearly without pop-up errors.
-2. Depending on your IT infrastructure, you might also need `--network host` for `docker run`.  
-3. If you reloaded VSCode before intitial installation was complete, no problem.
+2. If you reloaded VSCode before intitial installation was complete, no problem.
    Close VSCode, run `docker ps`, stop running containers and open VSCode again.
-4. If image is build succesfully in `run_bash_in_docker.sh`, but you have issues with VSCode,  
+3. If image is build succesfully in `run_bash_in_docker.sh`, but you have issues with VSCode,  
    try running `Dev Containers: Rebuild without cache and reopen in contaier` action (not from a container).  
    Also ensure that there are no modification which cause container to exit before VSCode canattach itself.
-5. If you have issues with `nrfjprog`/`west flash`, ensure `$LANG` is not set.   
+4. If you have issues with `nrfjprog`/`west flash`, ensure `$LANG` is not set.   
    "terminal.integrated.detectLocale": "off" has to be off, otherwise VSCode sets this ENV.
