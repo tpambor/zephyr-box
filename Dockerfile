@@ -87,6 +87,8 @@ RUN mkdir -p /etc/sudoers.d && useradd -u $UID -m -g user -G plugdev user \
 	&& echo 'user ALL = NOPASSWD: ALL' > /etc/sudoers.d/user \
 	&& chmod 0440 /etc/sudoers.d/user
 
+RUN usermod -a -G dialout user
+
 RUN mkdir -p /opt/zephyrproject/ && sudo chown -R user:user /opt/zephyrproject/
 
 # Clean up stale packages
