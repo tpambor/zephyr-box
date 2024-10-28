@@ -155,6 +155,15 @@ RUN apt-get update \
     && rm --recursive --force /var/lib/apt/lists/*
 
 #
+# --- install nodejs used for cspell ---
+#
+RUN apt-get update \
+&& apt-get install curl --assume-yes \
+&& curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash - \
+&& sudo apt-get install -y nodejs --assume-yes \
+&& npm install -g cspell@7.x
+
+#
 # --- Remove 'ubuntu' user and create 'user' user ---
 #
 RUN userdel --remove ubuntu \
