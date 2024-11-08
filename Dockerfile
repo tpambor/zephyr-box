@@ -69,6 +69,7 @@ RUN apt-get update \
         file \
         make \
         gcc \
+        gdb \
         gcc-multilib \
         g++-multilib \
         libsdl2-dev \
