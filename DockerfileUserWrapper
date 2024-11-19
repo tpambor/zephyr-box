@@ -1,0 +1,19 @@
+ARG ZEPHYR_BOX_IMAGE="zephyr-box"
+FROM $ZEPHYR_BOX_IMAGE
+
+ARG ZEPHYR_BOX_IMAGE
+ARG UID
+ARG GID
+
+USER root
+
+#
+# --- Adjust user uid and gid ---
+#
+RUN groupmod -g $GID user \
+    && usermod -u $UID -g $GID user \
+    && chown -h -R user:user /home/user
+
+USER user
+
+ENTRYPOINT ["/home/user/entrypoint.sh"]
