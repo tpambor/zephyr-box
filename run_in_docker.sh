@@ -39,6 +39,7 @@ if [ "$RUN_LOCALLY" == "true" ]; then
         --build-arg="GID=$USER_GID" \
         --tag zephyr-box \
         "$DOCKER_DIR"
+    DOCKER_IMAGE="zephyr-box"
 else
     # Get zephyr-box image version from Git tag
     IMAGE_VERSION=$(git describe --tags --abbrev=0 2>/dev/null | sed -n 's/^v\([0-9]\+\.[0-9]\+\).*/\1/p')
@@ -53,6 +54,7 @@ else
          --build-arg="GID=$USER_GID" \
          -t zephyr-box-user-wrapper \
          -f "$DOCKER_DIR"/DockerfileUserWrapper .
+    DOCKER_IMAGE="zephyr-box-user-wrapper"
 fi
 
 docker run \
@@ -67,4 +69,4 @@ docker run \
     --env PYTHON_VENV="$PYTHON_VENV_CONTAINER" \
     --env REQUIREMENTS_TXT="$REQUIREMENTS_TXT" \
     --env ON_DOCKER_STARTUP="$ON_DOCKER_STARTUP" \
-    zephyr-box "$@"
+    "$DOCKER_IMAGE" "$@"
