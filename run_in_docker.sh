@@ -42,7 +42,11 @@ if [ "$RUN_LOCALLY" == "true" ]; then
     DOCKER_IMAGE="zephyr-box"
 else
     # Get zephyr-box image version from Git tag
+    W_DIR=$(pwd)
+    cd "$DOCKER_DIR"
     IMAGE_VERSION=$(git describe --tags --abbrev=0 2>/dev/null | sed -n 's/^v\([0-9]\+\.[0-9]\+\).*/\1/p')
+    cd "$W_DIR"
+    printf "Found from zephyr-box tag the IMAGE_VERSION $IMAGE_VERSION\n"
     if [ -z "$IMAGE_VERSION" ]; then
         printf "No valid Git tag found to determine the version of the Docker image to be pulled from the remote\n"
         exit 1
