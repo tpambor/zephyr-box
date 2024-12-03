@@ -69,6 +69,7 @@ RUN apt-get update \
         file \
         make \
         gcc \
+        gdb \
         gcc-multilib \
         g++-multilib \
         libsdl2-dev \
@@ -152,6 +153,19 @@ RUN apt-get update \
         libparted-dev \
         dosfstools \
         lz4 \
+    && rm --recursive --force /var/lib/apt/lists/*
+
+#
+# --- install nodejs used for cspell ---
+#
+RUN apt-get update \
+    && sudo apt-get install ca-certificates curl gnupg --assume-yes \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor --output /etc/apt/keyrings/nodesource.gpg \
+    && NODE_MAJOR=20 \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
+    && sudo apt-get update \
+    && sudo apt-get install nodejs --assume-yes \
+    && sudo npm install -g cspell@7.x \
     && rm --recursive --force /var/lib/apt/lists/*
 
 #
