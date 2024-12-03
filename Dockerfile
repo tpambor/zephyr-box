@@ -159,10 +159,14 @@ RUN apt-get update \
 # --- install nodejs used for cspell ---
 #
 RUN apt-get update \
-&& apt-get install curl --assume-yes \
-&& curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash - \
-&& sudo apt-get install -y nodejs --assume-yes \
-&& npm install -g cspell@7.x
+    && sudo apt-get install ca-certificates curl gnupg --assume-yes \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor --output /etc/apt/keyrings/nodesource.gpg \
+    && NODE_MAJOR=20 \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
+    && sudo apt-get update \
+    && sudo apt-get install nodejs --assume-yes \
+    && sudo npm install -g cspell@7.x \
+    && rm --recursive --force /var/lib/apt/lists/*
 
 #
 # --- Remove 'ubuntu' user and create 'user' user ---
