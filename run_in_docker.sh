@@ -25,13 +25,13 @@ REQUIREMENTS_TXT="$PROJECT_ROOT_CONTAINER/requirements.txt"
 ON_DOCKER_STARTUP="$PROJECT_ROOT_CONTAINER/on_docker_startup.sh"
 
 TTY_FLAG=""
-if [ "$RUN_WITH_TTY" == "true" ]; then
+if [ "$RUN_WITH_TTY" = "true" ]; then
     TTY_FLAG="--tty"
 fi
 
 mkdir --parents "$WEST_WORKSPACE_HOST"
 
-if [ "$RUN_LOCALLY" == "true" ]; then
+if [ "$RUN_LOCALLY" = "true" ]; then
     # Build latest zephyr-box from scratch
     docker build \
         --network host \
