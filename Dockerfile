@@ -169,6 +169,16 @@ RUN apt-get update \
     && rm --recursive --force /var/lib/apt/lists/*
 
 #
+# --- Install GitHub CLI ---
+#
+RUN apt-get update \
+    && curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor --output /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list \
+    && sudo apt-get update \
+    && sudo apt-get install gh --assume-yes \
+    && rm --recursive --force /var/lib/apt/lists/*
+
+#
 # --- Remove 'ubuntu' user and create 'user' user ---
 #
 RUN userdel --remove ubuntu \
